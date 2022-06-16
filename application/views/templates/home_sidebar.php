@@ -21,9 +21,6 @@
           <li class="header">MENU APOTEKER</li> <?php } ?>
 
 
-
-
-
         <?php if ($_SESSION["status"] == "admin") { ?>
           <li>
             <a href="<?= base_url('mimin'); ?>">
@@ -87,6 +84,13 @@
           <li>
             <a href="<?= base_url('resep_obat'); ?>">
               <i class=" fa fa-fw fa-flask"></i><span>Resep Obat</span>
+              <span class="pull-right-container">
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="<?= base_url('rekam_medis'); ?>">
+              <i class=" fa fa-fw fa-history"></i><span>Rekam Medis</span>
               <span class="pull-right-container">
               </span>
             </a>

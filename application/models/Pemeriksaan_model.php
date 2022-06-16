@@ -184,4 +184,12 @@ class Pemeriksaan_model extends CI_Model
 		$pemeriksaan = $this->db->query($query)->result_array();
 		return $pemeriksaan;
 	}
+
+	public function getRekamMedisData()
+	{
+		$query = "SELECT pemeriksaan.*, resep.*, pasien.nama_pasien FROM pemeriksaan JOIN resep ON pemeriksaan.id_periksa = resep.id_pemeriksaan JOIN pasien ON pasien.kd_rm = pemeriksaan.kd_rm ORDER BY pemeriksaan.tanggal DESC ";
+
+		$data = $this->db->query($query)->result_array();
+		return $data;
+	}
 }
