@@ -21,7 +21,9 @@ class Pemeriksaan_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('pasien');
-		$this->db->where_in('kd_rm', $where1);
+		$this->db->join('pemeriksaan', 'pasien.kd_rm = pemeriksaan.kd_rm', 'left');
+		$this->db->where_in('pemeriksaan.kd_rm', $where1);
+		// $query = $this->db->query("SELECT a.*, b.* from pasien a join pemeriksaan b on a.kd_rm=b.kd_rm where a.kd_rm = $where1")->result_array();
 		return $query = $this->db->get();
 	}
 
@@ -63,20 +65,21 @@ class Pemeriksaan_model extends CI_Model
 		$this->db->insert($table, $data);
 	}
 
-	function ubah_data($kd_rm)
+	function ubah_data( $data, $table)
 	{
-		$data = [
+		$this->db->update($table, $data);
+		// $data = [
 
-			'kd_rm' => $this->input->post('kd_rm'),
-			'id_pasien' => $this->input->post('id_pasien'),
-			'keluhan' => $this->input->post('keluhan'),
-			'diagnosa' => $this->input->post('diagnosa'),
-			'tindakan' => $this->input->post('tindakan'),
-			'tanggal' => $this->input->post('tanggal')
-		];
+		// 	'kd_rm' => $this->input->post('kd_rm'),
+		// 	'id_pasien' => $this->input->post('id_pasien'),
+		// 	'keluhan' => $this->input->post('keluhan'),
+		// 	'diagnosa' => $this->input->post('diagnosa'),
+		// 	'tindakan' => $this->input->post('tindakan'),
+		// 	'tanggal' => $this->input->post('tanggal')
+		// ];
 
-		$this->db->where('kd_rm', $this->input->post('kd_rm'));
-		$this->db->update('pemeriksaan', $data);
+		// $this->db->where('kd_rm', $this->input->post('kd_rm'));
+		// $this->db->update('pemeriksaan', $data);
 	}
 
 	public function hapus_data($id_periksa)
@@ -176,10 +179,31 @@ class Pemeriksaan_model extends CI_Model
 	function view_all1()
 	{
 		$query = "SELECT `pasien`.`kd_rm` , `pasien`.`nama_pasien`, `pasien`.`pengobatan`, `pemeriksaan`.`kd_rm`,`pemeriksaan`.`keluhan`,`pemeriksaan`.`diagnosa`,`pemeriksaan`.`tindakan`,`pemeriksaan`.`tanggal`, `pemeriksaan`.`id_periksa` 
-		FROM `pemeriksaan`
-		LEFT JOIN `pasien`
-		ON `pasien`.`kd_rm`=`pemeriksaan`.`kd_rm`
-		ORDER BY `pemeriksaan`.`id_periksa` ASC ";
+		FROM pemeriksaan
+		LEFT JOIN pasien
+		ON pemeriksaan.kd_rm=pasien.kd_rm
+		ORDER BY pemeriksaan.id_periksa ASC ";
+
+		$pemeriksaan = $this->db->query($query)->result_array();
+		return $pemeriksaan;
+	}
+	
+	function view_trans()
+	{
+		// $query = "SELECT a.*, b.*, c.*, d.*, e.*
+		// FROM pemeriksaan a
+		// LEFT JOIN pasien b
+		// ON b.kd_rm=a.kd_rm
+		// LEFT JOIN dokter c
+		// ON a.id_dokter=c.id_dokter
+		// LEFT JOIN resep d ON a.id_periksa=d.id_pemeriksaan
+		// LEFT JOIN detail_resep e ON d.kd_resep=e.kd_resep
+		// ORDER BY a.id_periksa ASC ";
+		$query = "SELECT a.*, b.id_dokter, b.nama as nama_dokter, c.*, d.*
+		FROM resep a JOIN dokter b ON a.id_dokter=b.id_dokter
+		JOIN pemeriksaan c ON a.id_pemeriksaan=c.id_periksa
+		JOIN pasien d ON c.kd_rm=d.kd_rm
+		ORDER BY a.tanggal_resep ASC";
 
 		$pemeriksaan = $this->db->query($query)->result_array();
 		return $pemeriksaan;

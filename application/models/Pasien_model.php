@@ -13,6 +13,7 @@ class Pasien_model extends CI_Model
 	{
 		$data = [
 			'kd_rm' => $this->input->post('kd_rm'),
+			'nik' => $this->input->post('nik'),
 			'nama_pasien' => $this->input->post('nama_pasien'),
 			'jenkel' => $this->input->post('jenkel'),
 			'tempat_lahir' => $this->input->post('tempat_lahir'),

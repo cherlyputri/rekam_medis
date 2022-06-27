@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pemeriksaan extends CI_Controller
+class Pemeriksaan_perawat extends CI_Controller
 {
 
 	public function __construct()
@@ -23,21 +23,6 @@ class Pemeriksaan extends CI_Controller
 
 	public function index()
 	{
-		$judul['judul'] = 'Halaman Pemeriksaan';
-		$data['dokter'] = $this->db->get_where('dokter', ['username' => $this->session->userdata('username')])->row_array();
-		$data['pasien'] = $this->Pasien_model->getAllPasien()->result();
-		$this->load->helper('date');
-
-
-		$this->load->view('templates/home_header', $judul);
-		$this->load->view('templates/home_sidebar', $data);
-		$this->load->view('templates/home_topbar', $data);
-		$this->load->view('pemeriksaan/index', $data);
-		$this->load->view('templates/home_footer');
-	}
-	
-	public function perawat()
-	{
 		$judul['judul'] = 'Halaman Pemeriksaan perawat';
 		$data['dokter'] = $this->db->get_where('perawat', ['username' => $this->session->userdata('username')])->row_array();
 		$data['pasien'] = $this->Pasien_model->getAllPasien()->result();
@@ -47,7 +32,7 @@ class Pemeriksaan extends CI_Controller
 		$this->load->view('templates/home_header', $judul);
 		$this->load->view('templates/home_sidebar', $data);
 		$this->load->view('templates/home_topbar', $data);
-		$this->load->view('pemeriksaan/index_perawat', $data);
+		$this->load->view('pemeriksaan_perawat/index', $data);
 		$this->load->view('templates/home_footer');
 	}
 
@@ -55,8 +40,8 @@ class Pemeriksaan extends CI_Controller
 	public function periksa($kd_rm)
 	{
 
-		$judul['judul'] = 'Pemeriksaan';
-		$data['desc'] = 'Tambah Pemeriksaan';
+		$judul['judul'] = 'Pemeriksaan_perawat';
+		$data['desc'] = 'Tambah Pemeriksaan_perawat';
 		$data['kodeperiksa'] = $this->m_id->buat_kode_periksa();
 		$data['tanggal'] = date("d-m-Y");
 		$data['dokter'] = $this->db->get_where('dokter', ['username' => $this->session->userdata('username')])->row_array();
@@ -71,30 +56,7 @@ class Pemeriksaan extends CI_Controller
 		$this->load->view('templates/home_sidebar', $data);
 		$this->load->view('templates/home_topbar', $data);
 		$this->load->view('pemeriksaan/detail', $data1);
-		$this->load->view('pemeriksaan/input', $data2);
-		$this->load->view('templates/home_footer');
-	}
-
-	public function periksa_perawat($kd_rm)
-	{
-
-		$judul['judul'] = 'Pemeriksaan perawat';
-		$data['desc'] = 'Tambah Pemeriksaan perawat';
-		$data['kodeperiksa'] = $this->m_id->buat_kode_periksa();
-		$data['tanggal'] = date("d-m-Y");
-		$data['perawat'] = $this->db->get_where('perawat', ['username' => $this->session->userdata('username')])->row_array();
-		$where1 = array('kd_rm' => $kd_rm);
-		$data1['pasien'] = $this->Pemeriksaan_model->tampil_detail($where1)->result();
-		$data2['pemeriksaan'] = $this->Pemeriksaan_model->tampil_pemeriksaan($where1)->result();
-		$data['perawat'] = $this->db->get_where('perawat', ['username' => $this->session->userdata('username')])->row_array();
-		$data['tarif'] = $this->Pembayaran_model->tampil();
-
-
-		$this->load->view('templates/home_header', $judul);
-		$this->load->view('templates/home_sidebar', $data);
-		$this->load->view('templates/home_topbar', $data);
-		$this->load->view('pemeriksaan/detail', $data1);
-		$this->load->view('pemeriksaan/input_perawat', $data2);
+		$this->load->view('pemeriksaan_perawat/input', $data2);
 		$this->load->view('templates/home_footer');
 	}
 
@@ -111,8 +73,8 @@ class Pemeriksaan extends CI_Controller
 		$id_dokter = $this->db->query("SELECT id_dokter FROM dokter WHERE username='$username'")->row_array();
 
 		$data = array(
-			// 'kd_rm' => $kd_rm,
-			// 'id_periksa' => $id_periksa,
+			'kd_rm' => $kd_rm,
+			'id_periksa' => $id_periksa,
 			'keluhan' => $keluhan,
 			'diagnosa' => $diagnosa,
 			'tindakan' => $tindakan,
@@ -120,51 +82,16 @@ class Pemeriksaan extends CI_Controller
 			'id_dokter' => $id_dokter['id_dokter']
 		);
 
-		$this->Pemeriksaan_model->ubah_data($data, 'pemeriksaan');
+		$this->Pemeriksaan_perawat_model->input_data($data, 'pemeriksaan');
 		redirect('pemeriksaan/periksa/' . $kd_rm, '');
-	}
-	
-	function tambah_aksi_perawat()
-	{
-
-		$username = $this->session->userdata('username');
-		$kd_rm = $this->input->post('kd_rm');
-		$id_periksa = $this->input->post('id_periksa');
-		$keluhan = $this->input->post('keluhan');
-		$tb = $this->input->post('tb');
-		$bb = $this->input->post('bb');
-		$td = $this->input->post('td');
-		$tanggal = $this->input->post('tanggal');
-		$id_perawat = $this->db->query("SELECT id_perawat FROM perawat WHERE username='$username'")->row_array();
-
-		$data = array(
-			'kd_rm' => $kd_rm,
-			'id_periksa' => $id_periksa,
-			'keluhan' => $keluhan,
-			'tb' => $tb,
-			'bb' => $bb,
-			'td' => $td,
-			'tanggal' => $tanggal,
-			'id_perawat' => $id_perawat['id_perawat']
-		);
-
-		$this->Pemeriksaan_model->input_data($data, 'pemeriksaan');
-		redirect('pemeriksaan/periksa_perawat/' . $kd_rm, '');
 	}
 
 
 
 	public function hapus($id_periksa)
 	{
-		$this->Pemeriksaan_model->hapus_data($id_periksa);
+		$this->Pemeriksaan_perawat_model->hapus_data($id_periksa);
 		redirect('pemeriksaan/index');
-	}
-	
-	public function hapus_perawat($id_periksa)
-	{
-		$page = $this->uri->segment(4);
-		$this->Pemeriksaan_model->hapus_data($id_periksa);
-		redirect('pemeriksaan/periksa_perawat/'.$page);
 	}
 
 
@@ -182,19 +109,19 @@ class Pemeriksaan extends CI_Controller
 				$tanggal2 = $_GET['tanggal2'];
 				$ket = 'Data Rekam Medis dari Tanggal ' . date('d-m-y', strtotime($tanggal1)) . ' - ' . date('d-m-y', strtotime($tanggal2));
 				$url_cetak = 'pemeriksaan/cetak1?tanggal1=' . $tanggal1 . '&tanggal2=' . $tanggal2 . '';
-				$pemeriksaan = $this->Pemeriksaan_model->view_by_date($tanggal1, $tanggal2);
+				$pemeriksaan = $this->Pemeriksaan_perawat_model->view_by_date($tanggal1, $tanggal2);
 			} else if ($filter == '2') {
 				$kd_rm = $_GET['kd_rm'];
 				$ket = 'Data Rekam Medis ';
 				$url_cetak = 'pemeriksaan/cetak2?&kd_rm=' . $kd_rm;
-				$pemeriksaan = $this->Pemeriksaan_model->view_by_kd_rm($kd_rm);
+				$pemeriksaan = $this->Pemeriksaan_perawat_model->view_by_kd_rm($kd_rm);
 			}
 
 			// else if($filter == '3'){                
 			// $kelas = $_GET['kd_pasien'];                                                
 			// $ket = 'Data Pasien '.$pasien;                
 			// $url_cetak = 'pemeriksaan/cetak3?&pasien='.$pasien;                
-			// $pasien = $this->Pemeriksaan_model->view_by_kd_pasien($pasien)->result();             
+			// $pasien = $this->Pemeriksaan_perawat_model->view_by_kd_pasien($pasien)->result();             
 			// }
 
 
@@ -203,14 +130,14 @@ class Pemeriksaan extends CI_Controller
 
 			$ket = 'Semua Data Rekam Medis';
 			$url_cetak = 'pemeriksaan/cetak';
-			$pemeriksaan = $this->Pemeriksaan_model->view_all();
+			$pemeriksaan = $this->Pemeriksaan_perawat_model->view_all();
 		}
 
 		$data['ket'] = $ket;
 		$data['url_cetak'] = base_url($url_cetak);
 		$data['pemeriksaan'] = $pemeriksaan;
-		$data['kd_rm'] = $this->Pemeriksaan_model->kd_rm();
-		$data['kd_pasien'] = $this->Pemeriksaan_model->kd_pasien();
+		$data['kd_rm'] = $this->Pemeriksaan_perawat_model->kd_rm();
+		$data['kd_pasien'] = $this->Pemeriksaan_perawat_model->kd_pasien();
 
 
 
@@ -231,7 +158,7 @@ class Pemeriksaan extends CI_Controller
 
 		ob_start();
 		require('assets/pdf/fpdf.php');
-		$data['pemeriksaan'] = $this->Pemeriksaan_model->view_all();
+		$data['pemeriksaan'] = $this->Pemeriksaan_perawat_model->view_all();
 		$data['ket'] = $ket;
 		$data['alamat'] = $alamat;
 		$this->load->view('pemeriksaan/preview', $data);
@@ -247,7 +174,7 @@ class Pemeriksaan extends CI_Controller
 
 		ob_start();
 		require('assets/pdf/fpdf.php');
-		$data['pemeriksaan'] = $this->Pemeriksaan_model->view_by_date($tanggal1, $tanggal2);
+		$data['pemeriksaan'] = $this->Pemeriksaan_perawat_model->view_by_date($tanggal1, $tanggal2);
 		$data['ket'] = $ket;
 		$data['alamat'] = $alamat;
 		$this->load->view('pemeriksaan/preview', $data);
@@ -262,7 +189,7 @@ class Pemeriksaan extends CI_Controller
 		$alamat = 'Jl. Gita - Payahe, Talagamori, Oba Kota Tidore Kepulauan Maluku Utara';
 		ob_start();
 		require('assets/pdf/fpdf.php');
-		$data['pemeriksaan'] = $this->Pemeriksaan_model->view_by_kd_rm($kd_rm);
+		$data['pemeriksaan'] = $this->Pemeriksaan_perawat_model->view_by_kd_rm($kd_rm);
 		$data['ket'] = $ket;
 		$data['alamat'] = $alamat;
 		$this->load->view('pemeriksaan/preview1', $data);

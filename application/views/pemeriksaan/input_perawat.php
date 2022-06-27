@@ -4,7 +4,7 @@
 <div class="box-body">
 
 
-  <form action="<?= base_url('pemeriksaan/tambah_aksi'); ?>" method="post">
+  <form action="<?= base_url('pemeriksaan/tambah_aksi_perawat'); ?>" method="post">
     <?php foreach ($pasien as $u) { ?>
 
     <?php } ?>
@@ -25,29 +25,25 @@
     <div class="form-group row">
       <label for="keluhan" class="col-sm-2 col-form-label">Keluhan</label>
       <div class="col-sm-4">
-        <textarea class="form-control" id="keluhan" name="keluhan" rows="0" required="keluhan">
-          <?= $p->keluhan ?> 
-        </textarea>
-      </div>
-      <label for="diagnosa" class="col-sm-2 col-form-label">Diagnosis</label>
-      <div class="col-sm-4">
-        <textarea class="form-control" id="diagnosa" name="diagnosa" rows="2" required="diagnosa"></textarea>
+        <textarea class="form-control" id="keluhan" name="keluhan" rows="2" required="keluhan"></textarea>
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-form-label col-sm-2">Tindakan</label>
-      <div class="col-sm-10">
-        <div class="form-check">
-          <?php foreach ($tarif as $r) : ?>
-            <div class="form-check">
-              <input class="minimal" type="checkbox" multiple name="tindakan[]" value="<?= $r['nama_tarif'] ?>">
-              <label class="form-check-label">
-                <?= $r['nama_tarif'] ?>
-              </label>
-            </div>
-          <?php endforeach; ?>
-
-        </div>
+      <label for="tanggal" class="col-sm-2 col-form-label">Tinggi Badan (cm)</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="tb" name="tb" placeholder="Tinggi Badan">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="tanggal" class="col-sm-2 col-form-label">Berat Badan (Kg) </label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="bb" name="bb" placeholder="Berat Badan">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="tanggal" class="col-sm-2 col-form-label">Tekanan Darah </label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="td" name="td" placeholder="Tekanan Badan">
       </div>
     </div>
     <div class="box-footer">
@@ -61,6 +57,7 @@
 <div class="box box-success">
   <div class="box-header">
     <h3 class="box-title">Data Pemeriksaan</h3>
+
   </div>
   <div class="box-body">
     <table id="example1" class="table table-bordered table-striped ">
@@ -69,9 +66,10 @@
           <th>No.</th>
           <th>Tanggal</th>
           <th>Kode Pemeriksaan</th>
-          <th>Diagnosa</th>
+          <th>Tinggi Badan (cm)</th>
+          <th>Berat Badan (kg)</th>
+          <th>Tekanan Darah</th>
           <th>Keluhan</th>
-          <th>Tindakan</th>
           <th>Aksi</th>
 
         </tr>
@@ -85,13 +83,14 @@
             <td><?= $no_rm++ ?></td>
             <td><?= $r->tanggal ?></td>
             <td><?= $r->id_periksa ?></td>
-            <td><?= $r->diagnosa ?></td>
+            <td><?= $r->tb ?></td>
+            <td><?= $r->bb ?></td>
+            <td><?= $r->td ?></td>
             <td><?= $r->keluhan ?></td>
-            <td><?= $r->tindakan ?></td>
 
             <td>
 
-              <a href="<?= base_url('pemeriksaan/hapus/' . $r->id_periksa) ?>" class="btn btn-danger float-right" onclick="return confirm('Apakah anda yakin ingin menghapus data pemeriksaan tersebut?');">Hapus</a>
+              <a href="<?= base_url('pemeriksaan/hapus_perawat/' . $r->id_periksa . "/" . $r->kd_rm) ?>" class="btn btn-danger float-right" onclick="return confirm('Apakah anda yakin ingin menghapus data pemeriksaan tersebut?');">Hapus</a>
 
             </td>
 

@@ -29,6 +29,8 @@
     <div class="text-center">
       <a class="" href="<?= base_url('auth/login_admin'); ?>">Masuk sebagai <b>Admin!</b></a>
       <hr>
+      <a class="" href="<?= base_url('auth/login_perawat'); ?>">Masuk sebagai <b>Perawat!</b></a>
+      <hr>
       <a class="" href="<?= base_url('auth/login_apoteker'); ?>">Masuk sebagai <b>Apoteker!</b></a>
     </div>
   </div>

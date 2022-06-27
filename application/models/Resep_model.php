@@ -105,7 +105,43 @@ class Resep_model extends CI_Model
 		return $query = $this->db->get();
 	}
 
+	public function detail_resep($where)
+	{
+		$this->db->select('*');
+		$this->db->from('resep');
+		$this->db->join('pemeriksaan', 'resep.id_pemeriksaan = pemeriksaan.id_periksa');
+		$this->db->join('pasien', 'pasien.kd_rm = pemeriksaan.kd_rm');
+		$this->db->join('dokter', 'resep.id_dokter = dokter.id_dokter');
+		// $this->db->join('detail_resep', 'detail_resep.kd_resep = resep.kd_resep');
+		// $this->db->join('obat', 'detail_resep.id_obat = obat.id_obat');
+		$this->db->where_in('resep.kd_resep', $where);
+		return $query = $this->db->get();
+	}
 
+	public function konfirm()
+	{
+		// $data = [
+		// 	'status' => '1',
+
+		// ];
+		// $this->db->where('kd_resep', $this->input->post('kd_resep'));
+		// $this->db->update('detail_resep', $data);
+		$kd_resep = $this->input->post('kd_resep');
+		$this->db->query("UPDATE obat JOIN detail_resep ON obat.id_obat = detail_resep.id_obat SET obat.stok = detail_resep.stok_tot WHERE detail_resep.kd_resep = '$kd_resep'");
+	}
+	
+	public function detail_obat($where)
+	{
+		$this->db->select('*');
+		$this->db->from('resep');
+		$this->db->join('pemeriksaan', 'resep.id_pemeriksaan = pemeriksaan.id_periksa');
+		$this->db->join('pasien', 'pasien.kd_rm = pemeriksaan.kd_rm');
+		$this->db->join('dokter', 'resep.id_dokter = dokter.id_dokter');
+		$this->db->join('detail_resep', 'detail_resep.kd_resep = resep.kd_resep');
+		$this->db->join('obat', 'detail_resep.id_obat = obat.id_obat');
+		$this->db->where_in('resep.kd_resep', $where);
+		return $query = $this->db->get();
+	}
 
 	function tampil()
 	{

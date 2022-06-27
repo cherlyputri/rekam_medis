@@ -246,4 +246,81 @@ class Auth extends CI_Controller
         );
         redirect("auth");
     }
+
+    public function login_perawat()
+    {
+        $this->form_validation->set_rules(
+            "username",
+            "Username",
+            "trim|required"
+        );
+        $this->form_validation->set_rules(
+            "password",
+            "Password",
+            "trim|required"
+        );
+        if ($this->form_validation->run() == false) {
+            $data["title"] = "Halaman Login Perawat";
+            $this->load->view("templates/auth_header", $data);
+            $this->load->view("auth/login_perawat");
+            $this->load->view("templates/auth_footer");
+        } else {
+            $this->_loginperawat();
+        }
+    }
+
+    private function _loginperawat()
+    {
+        $username = $this->input->post("username");
+        $password = $this->input->post("password");
+
+        $perawat = $this->db
+            ->get_where("perawat", ["username" => $username])
+            ->row_array();
+        //user ada
+        if ($perawat) {
+            if ($perawat["aktif"] == 1) {
+                //cek password
+                if (password_verify($password, $perawat["password"])) {
+                    $data_session = [
+                        "username" => $username,
+                        "status" => "perawat",
+                    ];
+                    $this->session->set_userdata($data_session);
+                    redirect(base_url("perawat"));
+                } else {
+                    $this->session->set_flashdata(
+                        "message",
+                        '<div class="alert alert-danger" role="alert">Password anda salah!</div>'
+                    );
+                    redirect("auth/login_perawat");
+                }
+            } else {
+                $this->session->set_flashdata(
+                    "message",
+                    '<div class="alert alert-danger" role="alert">
+                Username tidak aktif !
+              </div>'
+                );
+                redirect("auth/login_perawat");
+            }
+        } else {
+            $this->session->set_flashdata(
+                "message",
+                '<div class="alert alert-danger" role="alert">Username anda tidak terdaftar!</div>'
+            );
+            redirect("auth/login_perawat");
+        }
+    }
+
+    public function logout_perawat()
+    {
+        $this->session->unset_userdata("username");
+        $this->session->unset_userdata("status");
+        $this->session->set_flashdata(
+            "message",
+            '<div class="alert alert-success" role="alert">Anda telah keluar</div>'
+        );
+        redirect("auth");
+    }
 }

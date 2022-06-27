@@ -9,6 +9,10 @@
         <?php if ($_SESSION["status"] == "dokter") { ?>
           <!-- Heading -->
           <li class="header">MENU DOKTER</li> <?php } ?>
+        
+        <?php if ($_SESSION["status"] == "perawat") { ?>
+          <!-- Heading -->
+          <li class="header">MENU PERAWAT</li> <?php } ?>
 
 
         <?php if ($_SESSION["status"] == "admin") { ?>
@@ -41,6 +45,14 @@
         <li>
           <?php if ($_SESSION["status"] == "apoteker") { ?>
             <a href="<?= base_url('apoteker'); ?>">
+              <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+              <span class="pull-right-container">
+              </span>
+            </a> <?php } ?>
+        </li>
+        <li>
+          <?php if ($_SESSION["status"] == "perawat") { ?>
+            <a href="<?= base_url('perawat'); ?>">
               <i class="fa fa-dashboard"></i> <span>Dashboard</span>
               <span class="pull-right-container">
               </span>
@@ -107,11 +119,35 @@
           </li>
         <?php   } ?>
 
+        <?php if ($_SESSION["status"] == "perawat") { ?>
+          <li>
+            <a href="<?= base_url('pemeriksaan/perawat'); ?>">
+              <i class=" fa fa-fw fa-stethoscope"></i><span>Pemeriksaan</span>
+              <span class="pull-right-container">
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="<?= base_url('rekam_medis'); ?>">
+              <i class=" fa fa-fw fa-history"></i><span>Rekam Medis</span>
+              <span class="pull-right-container">
+              </span>
+            </a>
+          </li>
+        <?php   } ?>
+
 
         <?php if ($_SESSION["status"] == "apoteker") { ?>
           <li>
             <a href="<?= base_url('data_obat'); ?>">
               <i class=" fa fa-fw fa-medkit"></i><span>Data Obat</span>
+              <span class="pull-right-container">
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="<?= base_url('resep_obat/transaksi'); ?>">
+              <i class=" fa fa-fw fa-exchange"></i><span>Transaksi</span>
               <span class="pull-right-container">
               </span>
             </a>

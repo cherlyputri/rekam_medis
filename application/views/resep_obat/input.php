@@ -18,7 +18,7 @@
 
 
 
-             <form action="<?= base_url('resep_obat/tambah_aksi'); ?>" method="post">
+             <form action="<?= base_url('resep_obat/tambah_resep'); ?>" method="post">
                <?php foreach ($pemeriksaan as $u) { ?>
 
                  <div class="form-group row">
@@ -63,6 +63,7 @@
                        <option value="<?= $r->id_obat ?>" value="<?= $r->id_obat ?>"><?= $r->nama_obat ?></option>
                      <?php endforeach; ?>
                    </select>
+                   <!-- <span id="keterangan_obat" style="color:red">Stok Obat Habis</span> -->
                  </div>
                  <label for="harga" class="col-sm-1 col-form-label">Harga </label>
                  <div class="col-sm-2">
@@ -74,7 +75,7 @@
                  </div>
                  <label for="stok_out" class="col-sm-1 col-form-label">Stok Keluar </label>
                  <div class="col-sm-1">
-                   <input type="number" class="form-control" name="stok_out">
+                   <input type="number" class="form-control" id="stok_out" name="stok_out">
                  </div>
                </div>
                <div class="form-group row">
@@ -98,16 +99,17 @@
              <h3 class="box-title">Data Resep Obat</h3>
            </div>
            <div class="box-body">
-             <table id="example2" class="table table-bordered table-striped ">
+             <table id="example2" class="table table-bordered table-striped table-responsive" width="100%">
                <thead>
                  <tr>
                    <th>No.</th>
                    <th>Nama Obat</th>
                    <th>Aturan Pakai</th>
                    <th>Harga</th>
-                   <th>Stok</th>
-                   <th>Stok Keluar</th>
-                   <th>Total Stok</th>
+                   <!-- <th>Stok</th> -->
+                   <!-- <th>Stok Keluar</th> -->
+                   <!-- <th>Total Stok</th> -->
+                   <th>Qty</th>
                    <th>Total</th>
                    <th>Aksi</th>
 
@@ -123,9 +125,9 @@
                      <td><?= $r->nama_obat ?></td>
                      <td><?= $r->aturan_pakai ?></td>
                      <td><?= 'Rp. ' . number_format($r->harga, 0, ',', '.') ?></td>
-                     <td><?= $r->stok ?></td>
+                     <!-- <td><?= $r->stok ?></td> -->
                      <td><?= $r->stok_out ?></td>
-                     <td><?= $r->stok_tot ?></td>
+                     <!-- <td><?= $r->stok_tot ?></td> -->
                      <td><?= 'Rp. ' . number_format($r->total, 0, ',', '.') ?></td>
                      <td>
 
@@ -141,7 +143,7 @@
                </tbody>
                <tfoot>
                  <tr>
-                   <td colspan="7" style="text-align: center;">Subtotal</td>
+                   <td colspan="5" style="text-align: center;">Subtotal</td>
                    <td><?= "Rp. " . number_format($subtotal) . " ,-" ?></td>
                    <td>
                      <center>
@@ -195,6 +197,8 @@
        });
        // alert(id);
      });
+
+     $('#')
 
 
 

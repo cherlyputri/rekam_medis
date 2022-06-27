@@ -25,6 +25,12 @@
   									<input type="text" class="form-control" id="kd_rm" name="kd_rm" value="<?= $kodeunik; ?>" readonly>
   								</div>
   							</div>
+							<div class="form-group row">
+								<label for="nama" class="col-sm-2 col-form-label">NIK Pasien </label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="nik" name="nik" placeholder="Masukan NIK Pasien" value="<?= set_value('nik') ?>">
+								</div>
+  							</div>
   							<div class="form-group row">
   								<label for="nama" class="col-sm-2 col-form-label">Nama Pasien </label>
   								<div class="col-sm-10">

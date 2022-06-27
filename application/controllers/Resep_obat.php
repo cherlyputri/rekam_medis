@@ -77,6 +77,70 @@ class Resep_obat extends CI_Controller
 		$this->load->view('templates/home_footer');
 	}
 
+	function tambah_resep()
+	{
+		$username = $this->session->userdata('username');
+		$kode_resep = $this->input->post('kd_resep');
+		$kd_resep = $this->input->post('kd_resep');
+		$id_obat = $this->input->post('id_obat');
+		$aturan_pakai = implode(' , ', $this->input->post('aturan_pakai', TRUE));
+		$id_periksa = $this->input->post('id_periksa');
+		$tanggal_resep = $this->input->post('tanggal_resep');
+		$tambah = $this->input->post('tambah');
+		$simpan = $this->input->post('simpan');
+		$id_pemeriksaan = $this->input->post('id_pemeriksaan');
+		$id_dokter = $this->db->query("SELECT id_dokter FROM dokter WHERE username='$username'")->row_array();
+
+		$stok = $this->input->post('stok');
+		$stok_out = $this->input->post('stok_out');
+		$harga = $this->input->post('harga');
+		$total = floatval($stok_out) * floatval($harga);
+		$subtotal = $this->Resep_model->hitungjumlah('detail_resep', ['kd_resep' => $kd_resep]);
+
+		if ($tambah) {
+			if ($stok < $stok_out) {
+				echo "<script language=\"javascript\">alert (\"Stok tidak cukup atau habis\"); document.location=\"../resep_obat/detail/$id_periksa\"</script>";
+			}else{
+				$data = array(
+					'kd_resep' => $kd_resep,
+					'id_obat' => $id_obat,
+					'aturan_pakai' => $aturan_pakai,
+					'stok_out'  => $stok_out,
+					'total'  => $total,
+					'status'  => '0'
+				);
+
+				$this->Resep_model->input_data1($data, 'detail_resep');
+				redirect('resep_obat/detail/' . $id_periksa, '');
+			}
+		}elseif ($simpan) {
+			$data = array(
+				'kd_resep' => $kd_resep,
+				'id_pemeriksaan' => $id_periksa,
+				'subtotal' => $subtotal,
+				'tanggal_resep' => $tanggal_resep,
+				'id_dokter' => $id_dokter['id_dokter']
+			);
+
+			$this->Resep_model->input_data($data, 'resep');
+			redirect('resep_obat/lihat/' . $id_periksa, '');
+		}
+	}
+
+	function konfirm_resep($kd_resep)
+	{
+		// $this->Resep_model->konfirm();
+		// $kd_resep = $this->input->post('kd_resep');
+
+		// $data = array(
+		// 	'status' =>1
+		// );
+		// $this->db->where('kd_resep', $this->input->post('kd_resep'));
+		// $this->db->update($data, 'detail_resep');
+		
+		$this->db->query("UPDATE obat JOIN detail_resep ON obat.id_obat = detail_resep.id_obat SET obat.stok = detail_resep.stok_tot, detail_resep.status=1 WHERE detail_resep.kd_resep = '$kd_resep'");
+		redirect('resep_obat/detail_trans/' . $kd_resep, '');
+	}
 
 	function tambah_aksi()
 	{
@@ -107,8 +171,9 @@ class Resep_obat extends CI_Controller
 
 
 		if ($tambah) {
-			if ($stok_tot < 0) {
-				echo "<script language=\"javascript\">alert (\"Stok tidak cukup atau habis\"); document.location=\"../transaksi/tambah_keluar\"</script>";
+			// if ($stok_tot < 0) {
+			if ($stok < $stok_out) {
+				echo "<script language=\"javascript\">alert (\"Stok tidak cukup atau habis\"); document.location=\"../resep_obat/detail/$id_periksa\"</script>";
 			} else {
 				if ($cek > 0) {
 					$this->db->query("UPDATE detail_resep set stok_out='$stok_out2', stok_tot='$stok_tot2', total='$total2' WHERE kd_resep='$kd_resep' AND id_obat='$id_obat'");
@@ -145,8 +210,36 @@ class Resep_obat extends CI_Controller
 	}
 
 
+	public function transaksi()
+	{
+		$judul['judul'] = 'Halaman Resep Obat';
+		$data['koderesep'] = $this->m_id->buat_kode_resep();
+		$data['pemeriksaan'] = $this->Pemeriksaan_model->view_trans();
+		$data['dokter'] = $this->db->get_where('dokter', ['username' => $this->session->userdata('username')])->row_array();
 
+		$this->load->view('templates/home_header', $judul);
+		$this->load->view('templates/home_sidebar');
+		$this->load->view('templates/home_topbar', $data);
+		$this->load->view('resep_obat/transaksi', $data);
+		$this->load->view('templates/home_footer');
+	}
 
+	public function detail_trans($kd_resep)
+	{
+		$judul['judul'] = 'Halaman Detail Transaksi';
+		$where = array('kd_resep' => $kd_resep);
+		$data['pemeriksaan'] = $this->Resep_model->detail_resep($where)->result();
+		$data['obat'] = $this->Resep_model->detail_obat($where)->result();
+		$data['resep'] = $this->Resep_model->getResep($where)->result();
+		$data['resep1'] = $this->Resep_model->getsub($where)->result();
+		$data['petugas_obat'] = $this->db->get_where('petugas_obat', ['username' => $this->session->userdata('username')])->row_array();
+
+		$this->load->view('templates/home_header', $judul);
+		$this->load->view('templates/home_sidebar');
+		$this->load->view('templates/home_topbar', $data);
+		$this->load->view('resep_obat/detail_trans', $data);
+		$this->load->view('templates/home_footer');
+	}
 
 	public function hapus($kd_resep)
 	{

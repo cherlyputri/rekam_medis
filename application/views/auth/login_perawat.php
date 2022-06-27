@@ -2,13 +2,13 @@
 
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <h4 class="login-box-msg"><b>Halaman Login Admin</b></h4>
+    <h4 class="login-box-msg"><b>Halaman Login Perawat</b></h4>
     <center>
       <img src="<?php echo base_url() ?>assets/img/logo_puskesmas.png" width="100">
     </center>
     <br>
     <?= $this->session->flashdata('message'); ?>
-    <form class="user" method="post" action="<?= base_url('auth/login_admin') ?>">
+    <form class="user" method="post" action="<?= base_url('auth/login_perawat') ?>">
       <div class="form-group">
         <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukan username..." value="<?= set_value('username') ?>">
         <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>

@@ -45,6 +45,7 @@ class Data_pasien extends CI_Controller
 		$data['kodeunik'] = $this->m_id->buat_kode();
 		$data['admin'] = $this->db->get_where('admin', ['username' => $this->session->userdata('username')])->row_array();
 
+		$this->form_validation->set_rules('nik', 'NIK Pasien', 'required|is_unique[pasien.nik]');
 		$this->form_validation->set_rules('nama_pasien', 'Nama Pasien', 'required');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required');
 		$this->form_validation->set_rules('jenkel', 'Jenis Kelamin', 'required');
