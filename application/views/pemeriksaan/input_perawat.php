@@ -5,27 +5,27 @@
 
 
   <form action="<?= base_url('pemeriksaan/tambah_aksi_perawat'); ?>" method="post">
-    <?php foreach ($pasien as $u) { ?>
-
-    <?php } ?>
+    
     <div class="form-group row">
+      
       <label for="tanggal" class="col-sm-2 col-form-label">Tanggal Pemeriksaan </label>
       <div class="col-sm-4">
+        <input type="hidden" class="form-control" id="kd_rm" name="kd_rm" value="<?php echo $datapasien ?>">
         <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= date('Y-m-d') ?>">
       </div>
       <label for="id_periksa" class="col-sm-2 col-form-label">No. Pemeriksaan </label>
       <div class="col-sm-4">
         <input type="text" class="form-control" id="id_periksa" name="id_periksa" value="<?= $kodeperiksa; ?>" readonly>
-        <?php foreach ($pasien as $p) { ?>
-
-
-          <input type="hidden" name="kd_rm" value="<?= $p->kd_rm ?>"> <?php } ?>
       </div>
     </div>
     <div class="form-group row">
       <label for="keluhan" class="col-sm-2 col-form-label">Keluhan</label>
       <div class="col-sm-4">
         <textarea class="form-control" id="keluhan" name="keluhan" rows="2" required="keluhan"></textarea>
+      </div>
+      <label for="keluhan" class="col-sm-2 col-form-label">Alergi</label>
+      <div class="col-sm-4">
+        <textarea class="form-control" id="alergi" name="alergi" rows="2" required="alergi"></textarea>
       </div>
     </div>
     <div class="form-group row">

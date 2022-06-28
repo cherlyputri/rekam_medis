@@ -16,13 +16,13 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tanggal</th>
                                     <th>Kode Pemeriksaan</th>
                                     <th>Nama</th>
                                     <th>Keluhan</th>
                                     <th>Diagnosa</th>
                                     <th>Tindakan</th>
                                     <th>Kode Resep</th>
+                                    <th>Obat</th>
                                     <th>Tanggal Resep</th>
                                     <th>Subtotal</th>
                                 </tr>
@@ -35,13 +35,13 @@
                                 ?>
                                     <tr>
                                         <td><?= $id++ ?></td>
-                                        <td><?= $r['tanggal']; ?></td>
                                         <td><?= $r['id_periksa']; ?></td>
                                         <td> <?= $r['nama_pasien']; ?></td>
                                         <td><?= $r['keluhan'] ?></td>
                                         <td><?= $r['diagnosa'] ?></td>
                                         <td><?= $r['tindakan'] ?></td>
                                         <td><?= $r['kd_resep'] ?></td>
+                                        <td><?= $r['nama_obat'] ?></td>
                                         <td><?= $r['tanggal_resep'] ?></td>
                                         <td class="text-right">Rp <?= number_format($r['subtotal'], 0, ',', '.') ?></td>
                                     <?php } ?>

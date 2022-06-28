@@ -84,7 +84,9 @@ class Pemeriksaan extends CI_Controller
 		$data['tanggal'] = date("d-m-Y");
 		$data['perawat'] = $this->db->get_where('perawat', ['username' => $this->session->userdata('username')])->row_array();
 		$where1 = array('kd_rm' => $kd_rm);
-		$data1['pasien'] = $this->Pemeriksaan_model->tampil_detail($where1)->result();
+		$where2 = $this->uri->segment(3);
+		$data1['datapasien'] = $this->uri->segment(3);
+		$data1['pasien'] = $this->Pemeriksaan_model->tampil_detail($where2)->result();
 		$data2['pemeriksaan'] = $this->Pemeriksaan_model->tampil_pemeriksaan($where1)->result();
 		$data['perawat'] = $this->db->get_where('perawat', ['username' => $this->session->userdata('username')])->row_array();
 		$data['tarif'] = $this->Pembayaran_model->tampil();
@@ -120,7 +122,9 @@ class Pemeriksaan extends CI_Controller
 			'id_dokter' => $id_dokter['id_dokter']
 		);
 
+		// $this->db->query("UPDATE pemeriksaan set");
 		$this->Pemeriksaan_model->ubah_data($data, 'pemeriksaan');
+		// $this->Pemeriksaan_model->update_data($id_periksa, $data, 'pemeriksaan');
 		redirect('pemeriksaan/periksa/' . $kd_rm, '');
 	}
 	
@@ -129,11 +133,13 @@ class Pemeriksaan extends CI_Controller
 
 		$username = $this->session->userdata('username');
 		$kd_rm = $this->input->post('kd_rm');
+		// $kd_rm = $this->uri->segment(3);
 		$id_periksa = $this->input->post('id_periksa');
 		$keluhan = $this->input->post('keluhan');
 		$tb = $this->input->post('tb');
 		$bb = $this->input->post('bb');
 		$td = $this->input->post('td');
+		$alergi = $this->input->post('alergi');
 		$tanggal = $this->input->post('tanggal');
 		$id_perawat = $this->db->query("SELECT id_perawat FROM perawat WHERE username='$username'")->row_array();
 
@@ -144,6 +150,7 @@ class Pemeriksaan extends CI_Controller
 			'tb' => $tb,
 			'bb' => $bb,
 			'td' => $td,
+			'alergi' => $alergi,
 			'tanggal' => $tanggal,
 			'id_perawat' => $id_perawat['id_perawat']
 		);

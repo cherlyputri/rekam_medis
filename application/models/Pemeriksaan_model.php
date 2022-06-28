@@ -21,8 +21,8 @@ class Pemeriksaan_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('pasien');
-		$this->db->join('pemeriksaan', 'pasien.kd_rm = pemeriksaan.kd_rm', 'left');
-		$this->db->where_in('pemeriksaan.kd_rm', $where1);
+		// $this->db->join('pemeriksaan', 'pasien.kd_rm = pemeriksaan.kd_rm', 'left');
+		$this->db->where_in('kd_rm', $where1);
 		// $query = $this->db->query("SELECT a.*, b.* from pasien a join pemeriksaan b on a.kd_rm=b.kd_rm where a.kd_rm = $where1")->result_array();
 		return $query = $this->db->get();
 	}
@@ -80,6 +80,12 @@ class Pemeriksaan_model extends CI_Model
 
 		// $this->db->where('kd_rm', $this->input->post('kd_rm'));
 		// $this->db->update('pemeriksaan', $data);
+	}
+
+	function update_data($where, $data, $table)
+	{
+		$this->db->where($where);
+		$this->db->update($table, $data);
 	}
 
 	public function hapus_data($id_periksa)
@@ -211,7 +217,7 @@ class Pemeriksaan_model extends CI_Model
 
 	public function getRekamMedisData()
 	{
-		$query = "SELECT pemeriksaan.*, resep.*, pasien.nama_pasien FROM pemeriksaan JOIN resep ON pemeriksaan.id_periksa = resep.id_pemeriksaan JOIN pasien ON pasien.kd_rm = pemeriksaan.kd_rm ORDER BY pemeriksaan.tanggal DESC ";
+		$query = "SELECT pemeriksaan.*, resep.*, pasien.nama_pasien, detail_resep.*, obat.* FROM pemeriksaan JOIN resep ON pemeriksaan.id_periksa = resep.id_pemeriksaan JOIN pasien ON pasien.kd_rm = pemeriksaan.kd_rm JOIN detail_resep ON detail_resep.kd_resep=resep.kd_resep JOIN obat ON obat.id_obat=detail_resep.id_obat ORDER BY pemeriksaan.tanggal DESC ";
 
 		$data = $this->db->query($query)->result_array();
 		return $data;

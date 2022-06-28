@@ -13,10 +13,10 @@
       <div class="col-sm-4">
         <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= date('Y-m-d') ?>">
       </div>
-      <label for="id_periksa" class="col-sm-2 col-form-label">No. Pemeriksaan </label>
+      <!-- <label for="id_periksa" class="col-sm-2 col-form-label">No. Pemeriksaan </label> -->
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="id_periksa" name="id_periksa" value="<?= $kodeperiksa; ?>" readonly>
-        <?php foreach ($pasien as $p) { ?>
+        <!-- <input type="text" class="form-control" id="id_periksa" name="id_periksa" value="<?= $kodeperiksa; ?>" readonly> -->
+        <?php foreach ($pemeriksaan as $p) { ?>
 
 
           <input type="hidden" name="kd_rm" value="<?= $p->kd_rm ?>"> <?php } ?>
@@ -25,10 +25,15 @@
     <div class="form-group row">
       <label for="keluhan" class="col-sm-2 col-form-label">Keluhan</label>
       <div class="col-sm-4">
-        <textarea class="form-control" id="keluhan" name="keluhan" rows="0" required="keluhan">
-          <?= $p->keluhan ?> 
+        <textarea class="form-control" id="keluhan" name="keluhan" rows="2" required="keluhan"><?= $p->keluhan ?> 
         </textarea>
       </div>
+      <label for="diagnosa" class="col-sm-2 col-form-label">Alergi</label>
+      <div class="col-sm-4">
+        <textarea class="form-control" id="diagnosa" name="diagnosa" rows="2" required="diagnosa"><?= $p->alergi ?></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
       <label for="diagnosa" class="col-sm-2 col-form-label">Diagnosis</label>
       <div class="col-sm-4">
         <textarea class="form-control" id="diagnosa" name="diagnosa" rows="2" required="diagnosa"></textarea>

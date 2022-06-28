@@ -103,11 +103,19 @@
 			</tr>
 			<tr>
 
+				<td>Tanda Tangan</td>
 				<td></td>
 				<td></td>
 				<td>Tanda Tangan</td>
 			</tr>
 			<tr>
+				<td>
+					<br>
+					<br>
+					<br>
+					<br>
+					<?php echo $row->nama_pasien ?>
+				</td>
 				<td></td>
 				<td></td>
 

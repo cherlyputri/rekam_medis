@@ -79,6 +79,7 @@
             <ul class="treeview-menu">
               <li><a href="<?= base_url('data_dokter'); ?>"><i class="fa fa-circle-o"></i> Data Dokter</a></li>
               <li><a href="<?= base_url('data_admin'); ?>"><i class="fa fa-circle-o"></i> Data Admin</a></li>
+              <li><a href="<?= base_url('data_perawat'); ?>"><i class="fa fa-circle-o"></i> Data Perawat</a></li>
               <li><a href="<?= base_url('data_apoteker'); ?>"><i class="fa fa-circle-o"></i> Data Apoteker</a></li>
             </ul>
           </li>
@@ -127,13 +128,13 @@
               </span>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="<?= base_url('rekam_medis'); ?>">
               <i class=" fa fa-fw fa-history"></i><span>Rekam Medis</span>
               <span class="pull-right-container">
               </span>
             </a>
-          </li>
+          </li> -->
         <?php   } ?>
 
 

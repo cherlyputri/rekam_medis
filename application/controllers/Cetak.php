@@ -52,7 +52,7 @@ class Cetak extends CI_Controller
     );
     $data['kd_bayar'] = $this->db->query("SELECT * FROM detail_bayar JOIN tarif on detail_bayar.id_tarif = tarif.id_tarif WHERE kd_bayar='$kodebayar'")->row_array();
 
-    $data['obat'] = $this->db->query("SELECT * FROM resep JOIN pembayaran on resep.kd_resep = pembayaran.kd_resep JOIN admin on pembayaran.id_admin = admin.id_admin where kd_bayar = '$kodebayar'");
+    $data['obat'] = $this->db->query("SELECT * FROM resep JOIN pembayaran on resep.kd_resep = pembayaran.kd_resep JOIN admin on pembayaran.id_admin = admin.id_admin JOIN pemeriksaan on resep.id_pemeriksaan=pemeriksaan.id_periksa JOIN pasien on pasien.kd_rm=pemeriksaan.kd_rm where kd_bayar = '$kodebayar'");
 
     ob_start();
     require('assets/pdf/fpdf.php');
