@@ -97,7 +97,7 @@
                     <td><?php echo $data->nama_obat ?></td>
                     <td><?php echo $data->aturan_pakai ?></td>
                     <td><?php echo $data->stok_out ?></td>
-                    <td><?php echo $data->status ?></td>
+                    <!-- <td><?php echo $data->status ?></td> -->
                   </tr>
                   <?php } ?>
                 </tbody>

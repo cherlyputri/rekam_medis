@@ -93,6 +93,7 @@ class Resep_obat extends CI_Controller
 
 		$stok = $this->input->post('stok');
 		$stok_out = $this->input->post('stok_out');
+		$stok_tot = floatval($stok) - floatval($stok_out);
 		$harga = $this->input->post('harga');
 		$total = floatval($stok_out) * floatval($harga);
 		$subtotal = $this->Resep_model->hitungjumlah('detail_resep', ['kd_resep' => $kd_resep]);
@@ -106,6 +107,7 @@ class Resep_obat extends CI_Controller
 					'id_obat' => $id_obat,
 					'aturan_pakai' => $aturan_pakai,
 					'stok_out'  => $stok_out,
+					'stok_tot'  => $stok_tot,
 					'total'  => $total,
 					'status'  => '0'
 				);
