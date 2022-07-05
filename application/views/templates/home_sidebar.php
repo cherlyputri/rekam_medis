@@ -9,7 +9,7 @@
         <?php if ($_SESSION["status"] == "dokter") { ?>
           <!-- Heading -->
           <li class="header">MENU DOKTER</li> <?php } ?>
-        
+
         <?php if ($_SESSION["status"] == "perawat") { ?>
           <!-- Heading -->
           <li class="header">MENU PERAWAT</li> <?php } ?>
@@ -148,7 +148,7 @@
           </li>
           <li>
             <a href="<?= base_url('resep_obat/transaksi'); ?>">
-              <i class=" fa fa-fw fa-exchange"></i><span>Transaksi</span>
+              <i class=" fa fa-fw fa-exchange"></i><span>Pengambilan Obat</span>
               <span class="pull-right-container">
               </span>
             </a>

@@ -5,9 +5,9 @@
 
 
   <form action="<?= base_url('pemeriksaan/tambah_aksi_perawat'); ?>" method="post">
-    
+
     <div class="form-group row">
-      
+
       <label for="tanggal" class="col-sm-2 col-form-label">Tanggal Pemeriksaan </label>
       <div class="col-sm-4">
         <input type="hidden" class="form-control" id="kd_rm" name="kd_rm" value="<?php echo $datapasien ?>">
@@ -43,7 +43,7 @@
     <div class="form-group row">
       <label for="tanggal" class="col-sm-2 col-form-label">Tekanan Darah </label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="td" name="td" placeholder="Tekanan Badan">
+        <input type="text" class="form-control" id="td" name="td" placeholder="Tekanan Darah">
       </div>
     </div>
     <div class="box-footer">

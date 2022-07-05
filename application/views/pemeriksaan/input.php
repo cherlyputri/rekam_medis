@@ -38,6 +38,21 @@
       <div class="col-sm-4">
         <textarea class="form-control" id="diagnosa" name="diagnosa" rows="2" required="diagnosa"></textarea>
       </div>
+      <label for="tb" class="col-sm-2 col-form-label">Tinggi Badan (cm)</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="tb" name="tb" required value="<?= $p->tb ?>">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="bb" class="col-sm-2 col-form-label">Berat Badan (Kg)</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="bb" name="bb" required value="<?= $p->bb ?>">
+      </div>
+      <label for="td" class="col-sm-2 col-form-label">Tekanan Darah</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="td" name="td" value="<?= $p->td ?>">
+      </div>
     </div>
     <div class="form-group row">
       <label class="col-form-label col-sm-2">Tindakan</label>

@@ -101,7 +101,7 @@ class Resep_obat extends CI_Controller
 		if ($tambah) {
 			if ($stok < $stok_out) {
 				echo "<script language=\"javascript\">alert (\"Stok tidak cukup atau habis\"); document.location=\"../resep_obat/detail/$id_periksa\"</script>";
-			}else{
+			} else {
 				$data = array(
 					'kd_resep' => $kd_resep,
 					'id_obat' => $id_obat,
@@ -115,7 +115,7 @@ class Resep_obat extends CI_Controller
 				$this->Resep_model->input_data1($data, 'detail_resep');
 				redirect('resep_obat/detail/' . $id_periksa, '');
 			}
-		}elseif ($simpan) {
+		} elseif ($simpan) {
 			$data = array(
 				'kd_resep' => $kd_resep,
 				'id_pemeriksaan' => $id_periksa,
@@ -139,7 +139,7 @@ class Resep_obat extends CI_Controller
 		// );
 		// $this->db->where('kd_resep', $this->input->post('kd_resep'));
 		// $this->db->update($data, 'detail_resep');
-		
+
 		$this->db->query("UPDATE obat JOIN detail_resep ON obat.id_obat = detail_resep.id_obat SET obat.stok = detail_resep.stok_tot, detail_resep.status=1 WHERE detail_resep.kd_resep = '$kd_resep'");
 		redirect('resep_obat/detail_trans/' . $kd_resep, '');
 	}
@@ -214,7 +214,7 @@ class Resep_obat extends CI_Controller
 
 	public function transaksi()
 	{
-		$judul['judul'] = 'Halaman Resep Obat';
+		$judul['judul'] = 'Halaman Pengambilan Obat';
 		$data['koderesep'] = $this->m_id->buat_kode_resep();
 		$data['pemeriksaan'] = $this->Pemeriksaan_model->view_trans();
 		$data['dokter'] = $this->db->get_where('dokter', ['username' => $this->session->userdata('username')])->row_array();
