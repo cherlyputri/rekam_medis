@@ -222,20 +222,23 @@ class Pemeriksaan_model extends CI_Model
 		$query = "SELECT a.*, b.*, c.* FROM pemeriksaan a 
 		JOIN pasien b ON a.kd_rm=b.kd_rm
 		JOIN resep c ON a.id_periksa=c.id_pemeriksaan  
-		GROUP BY a.id_periksa;
-		-- ORDER BY a.id_periksa DESC ";
+		GROUP BY a.id_periksa";
+		//ORDER BY a.id_periksa DESC;
 
 		$data = $this->db->query($query)->result_array();
 		return $data;
 	}
 
-	public function detailRekam($id)
+	public function detailRekam()
 	{
-		$this->db->select('*');
-		$this->db->from('pasien');
-		$this->db->join('pemeriksaan', 'pasien.kd_rm = pemeriksaan.kd_rm');
-		$this->db->where_in('id_periksa', $id);
-		return $query = $this->db->get();
+		$query = "SELECT a.*, b.*, c.*, d.*, e.* FROM resep a 
+		JOIN pemeriksaan b ON a.id_pemeriksaan=b.id_periksa 
+		JOIN pasien c ON b.kd_rm=c.kd_rm 
+		JOIN detail_resep d ON a.kd_resep=d.kd_resep 
+		JOIN obat e ON d.id_obat=e.id_obat";
+
+		$data = $this->db->query($query)->result_array();
+		return $data;
 	}
 
 	public function getAll()
