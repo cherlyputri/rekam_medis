@@ -11,62 +11,68 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-body">
-
+                    <?php foreach ($data as $d) { ?>
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Kode Periksa </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<?= $d->id_periksa ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Nama Pasien</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<?= $d->nama_pasien ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Nama Dokter</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<?= $d->nama ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Nama Perawat</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<?= $d->nama_perawat ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Keluhan</label>
                                 <div class="col-sm-7">
                                     <!-- <input type="text" class="form-control" value="<?= $r->keluhan ?>" readonly> -->
-                                    <textarea name="keluhan" class="form-control" id="keluhan" readonly>efefe</textarea>
+                                    <textarea name="keluhan" class="form-control" id="keluhan" readonly><?= $d->keluhan ?></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Nama Pasien</label>
+                                <label class="col-sm-4 col-form-label">Tinggi Badan</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<?= $d->tb ?> " readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Nama Dokter </label>
+                                <label class="col-sm-4 col-form-label">Berat Badan</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<?= $d->bb ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-4 col-form-label">Keluhan</label>
+                                <label class="col-sm-4 col-form-label">Tekanan Darah</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" value="<?= $d->td ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Alergi</label>
                                 <div class="col-sm-7">
                                     <!-- <input type="text" class="form-control" value="<?= $r->keluhan ?>" readonly> -->
-                                    <textarea name="keluhan" class="form-control" id="keluhan" readonly>efefe</textarea>
+                                    <textarea name="keluhan" class="form-control" id="keluhan" readonly><?= $d->alergi ?></textarea>
                                 </div>
                             </div>
                         </div>
-
+                    <?php } ?>
                     </div>
                 </div>
 
@@ -89,7 +95,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                            <?php 
+                                $no = 1;
+                                foreach ($pemeriksaan as $r) { ?>
+                                <tr>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $r->kd_resep ?></td>
+                                    <td><?php echo $r->nama_obat ?></td>
+                                    <td><?php echo $r->aturan_pakai ?></td>
+                                    <td><?php echo $r->stok_out ?></td>
+                                </tr>
+                            <?php } ?>
                             </tbody>
 
 

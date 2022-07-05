@@ -44,7 +44,7 @@
                                         <td>
                                             <!-- <a href="#" data-toggle="modal" data-target="#detail-<?= $r['id_periksa'] ?>" class="badge badge-warning">Detail</a> -->
                                             <a href="<?= base_url('rekam_medis/detailRekam/' . $r['id_periksa']) ?>" class="badge badge-warning">Detail</a>
-                                            <a href="#" data-toggle="modal" data-target="#resep-<?= $r['kd_resep'] ?>" class="badge badge-primary">Resep</a>
+                                            <a href="<?= base_url('cetak/cetakRekam/' . $r['id_periksa']) ?>" target="_blank" class="badge badge-primary">Print</a>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -67,7 +67,7 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <?php foreach ($detail as $r) : ?>
+        <!-- <?php foreach ($detail as $r) : ?>
             <div class="modal" id="detail-<?= $r['id_periksa'] ?>" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -80,7 +80,6 @@
                         <div class="modal-body">
                             <h5><?= $r['nama_pasien'] ?></h5>
                             <h5><?= $r['nama_obat'] ?></h5>
-                            <!-- <p>Modal body text goes here.</p> -->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary">Save changes</button>
@@ -89,9 +88,9 @@
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php endforeach; ?> -->
 
-        <?php foreach ($resep as $rsp) : ?>
+        <!-- <?php foreach ($resep as $rsp) : ?>
             <div class="modal" id="resep-<?= $rsp['kd_resep'] ?>" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -135,4 +134,4 @@
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php endforeach; ?> -->

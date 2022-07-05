@@ -79,6 +79,7 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => '',
 	'database' => 'rekmed',
+	// 'database' => 'rekam_medis',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

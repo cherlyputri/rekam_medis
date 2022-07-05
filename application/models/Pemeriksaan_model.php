@@ -196,15 +196,6 @@ class Pemeriksaan_model extends CI_Model
 
 	function view_trans()
 	{
-		// $query = "SELECT a.*, b.*, c.*, d.*, e.*
-		// FROM pemeriksaan a
-		// LEFT JOIN pasien b
-		// ON b.kd_rm=a.kd_rm
-		// LEFT JOIN dokter c
-		// ON a.id_dokter=c.id_dokter
-		// LEFT JOIN resep d ON a.id_periksa=d.id_pemeriksaan
-		// LEFT JOIN detail_resep e ON d.kd_resep=e.kd_resep
-		// ORDER BY a.id_periksa ASC ";
 		$query = "SELECT a.*, b.id_dokter, b.nama as nama_dokter, c.*, d.*
 		FROM resep a JOIN dokter b ON a.id_dokter=b.id_dokter
 		JOIN pemeriksaan c ON a.id_pemeriksaan=c.id_periksa
@@ -223,22 +214,35 @@ class Pemeriksaan_model extends CI_Model
 		JOIN pasien b ON a.kd_rm=b.kd_rm
 		JOIN resep c ON a.id_periksa=c.id_pemeriksaan  
 		GROUP BY a.id_periksa";
-		//ORDER BY a.id_periksa DESC;
 
 		$data = $this->db->query($query)->result_array();
 		return $data;
 	}
 
-	public function detailRekam()
+	public function detailRekam($where)
 	{
-		$query = "SELECT a.*, b.*, c.*, d.*, e.* FROM resep a 
-		JOIN pemeriksaan b ON a.id_pemeriksaan=b.id_periksa 
-		JOIN pasien c ON b.kd_rm=c.kd_rm 
-		JOIN detail_resep d ON a.kd_resep=d.kd_resep 
-		JOIN obat e ON d.id_obat=e.id_obat";
-
-		$data = $this->db->query($query)->result_array();
-		return $data;
+		$this->db->select('*');
+		$this->db->from('resep');
+		$this->db->join('pemeriksaan', 'resep.id_pemeriksaan = pemeriksaan.id_periksa');
+		$this->db->join('pasien', 'pasien.kd_rm = pemeriksaan.kd_rm');
+		$this->db->join('detail_resep', 'detail_resep.kd_resep = resep.kd_resep');
+		$this->db->join('obat', 'detail_resep.id_obat = obat.id_obat');
+		$this->db->where_in('id_periksa', $where);
+		// $this->db->order_by('kd_resep' , 'DESC');
+		return $query = $this->db->get();
+	}
+	
+	public function detailRekam2($where)
+	{
+		$this->db->select('resep.*, pemeriksaan.*, pasien.*, dokter.*, perawat.id_perawat, perawat.nama as nama_perawat');
+		$this->db->from('resep');
+		$this->db->join('pemeriksaan', 'resep.id_pemeriksaan = pemeriksaan.id_periksa');
+		$this->db->join('pasien', 'pasien.kd_rm = pemeriksaan.kd_rm');
+		$this->db->join('dokter', 'dokter.id_dokter = pemeriksaan.id_dokter');
+		$this->db->join('perawat', 'perawat.id_perawat = pemeriksaan.id_perawat');
+		$this->db->where_in('id_periksa', $where);
+		// $this->db->order_by('kd_resep' , 'DESC');
+		return $query = $this->db->get();
 	}
 
 	public function getAll()

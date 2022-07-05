@@ -8,6 +8,7 @@ class Cetak extends CI_Controller
   {
     parent::__construct();
     $this->load->model('Resep_model');
+    $this->load->model('Pemeriksaan_model');
     $this->load->model('m_id');
   }
   public function index()
@@ -17,6 +18,7 @@ class Cetak extends CI_Controller
     );
     $this->load->view('v_index', $data);
   }
+
   public function cetak($kd_rm)
   {
     $data = array(
@@ -25,6 +27,22 @@ class Cetak extends CI_Controller
     ob_start();
     require('assets/pdf/fpdf.php');
     $this->load->view('data_pasien/cetak', $data);
+  }
+  
+  public function cetakRekam($id)
+  {
+    $ket = 'Data Rekamedis';
+		$alamat = 'Jl. Gita - Payahe, Talagamori, Oba Kota Tidore Kepulauan Maluku Utara';
+
+		ob_start();
+		require('assets/pdf/fpdf.php');
+
+    $where = array('id_periksa' => $id);
+    $data['pemeriksaan'] = $this->Pemeriksaan_model->detailRekam($where)->result();
+    $data['pasien'] = $this->Pemeriksaan_model->detailRekam2($where)->result();
+		$data['ket'] = $ket;
+		$data['alamat'] = $alamat;
+    $this->load->view('rekam_medis/print', $data);
   }
 
   public function cetak_resep($koderesep)
